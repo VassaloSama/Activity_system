@@ -19,7 +19,7 @@ def post_atividade():
 def listar_atividades():
     return jsonify(Atividade.listar_atividades()), 200
 
-@atividadesApp.route('/atividades/<int:id>' methods=['GET'])
+@atividadesApp.route('/atividades/<int:id>', methods=['GET'])
 def obter_atividade(id):
     atividade = Atividade.obter_atividade(id)
     if not atividade:
