@@ -1,0 +1,6 @@
+tags:
+  - Atividades
+summary: Listar todas as atividades
+responses:
+  200:
+    description: Lista de atividades

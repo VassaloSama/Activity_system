@@ -1,0 +1,24 @@
+tags:
+  - Atividades
+summary: Atualizar Atividade
+parameters:
+  - name: atividade_id
+    in: path
+    required: true
+    schema:
+      type: integer
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          enunciado:
+            type: string
+            example: "Atividade matemática atualizada"
+responses:
+  200:
+    description: Atividade atualizada com sucesso
+  404:
+    description: Atividade não encontrada

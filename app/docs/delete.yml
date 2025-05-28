@@ -1,0 +1,14 @@
+tags:
+  - Atividades
+summary: Deletar Atividade
+parameters:
+  - name: atividade_id
+    in: path
+    required: true
+    schema:
+      type: integer
+responses:
+  200:
+    description: Atividade deletada com sucesso
+  404:
+    description: Atividade não encontrada
