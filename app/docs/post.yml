@@ -1,0 +1,24 @@
+tags:
+  - Atividades
+summary: Criar Atividade
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          atividade_id:
+            type: integer
+            example: 1
+          professor_id:
+            type: integer
+            example: 2
+          hora_inicio:
+            type: string
+            example: "AP1 - ADS3AN"
+responses:
+  201:
+    description: Atividade criada com sucesso
+  400:
+    description: Erro de validação
