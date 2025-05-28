@@ -1,7 +1,6 @@
-from flask import jsonify, request, abort, Blueprint
+from flask import jsonify, request, Blueprint
 from models.atividades import Atividade
 from config import db
-import requests
 
 atividadesApp = Blueprint('atividades', __name__)
 
@@ -43,9 +42,3 @@ def deletar_atividade(id):
     except ValueError as e:
         return jsonify({"erro": str(e.args[0])}), e.args[1]
     
-def verificar_professor(professor_id):
-    url = f"http://localhost:5000/professores/{professor_id}"
-    resposta = requests.get(url)
-
-    if resposta.status_code != 200:
-        abort(404, description="Professor não encontrado no sistema de gerenciamento escolar.")

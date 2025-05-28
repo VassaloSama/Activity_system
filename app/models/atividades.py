@@ -1,5 +1,5 @@
 from config import db
-from controller.atividade import verificar_professor
+import requests
 
 class Atividade(db.Model):
     __tablename__ = 'atividades'
@@ -26,7 +26,8 @@ class Atividade(db.Model):
         if Atividade.query.get(dados["atividade_id"]):
             raise ValueError(("atividade com esse ID já existe!"), 400)
         
-        verificar_professor(dados["professor_id"])
+        if not Atividade.verificar_professor(dados["professor_id"]):
+            raise ValueError (("Professor não encontrado!"), 404)
 
         enunciado = str(dados["enunciado"])
 
@@ -56,7 +57,8 @@ class Atividade(db.Model):
         if not atividade:
             raise ValueError (("Atividade não encontrada!"), 404)
         
-        verificar_professor(dados["professor_id"])
+        if not Atividade.verificar_professor(dados["professor_id"]):
+            raise ValueError (("Professor não encontrado!"), 404)
 
         if "enunciado" in dados:
             atividade.enunciado = dados["enunciado"]
@@ -71,3 +73,12 @@ class Atividade(db.Model):
             raise ValueError(("Atividade não encontrada!"), 404)
         db.session.delete(atividade)
         db.session.commit()
+
+    
+    @staticmethod
+    def verificar_professor(professor_id):
+        response = requests.get(f'http://host.docker.internal:5000/turmas/{professor_id}')
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise ValueError((f"Professor com ID {professor_id} não encontrada."), 404)
