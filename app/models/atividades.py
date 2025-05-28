@@ -56,9 +56,6 @@ class Atividade(db.Model):
         atividade = Atividade.query.get(id)
         if not atividade:
             raise ValueError (("Atividade não encontrada!"), 404)
-        
-        if not Atividade.verificar_professor(dados["professor_id"]):
-            raise ValueError (("Professor não encontrado!"), 404)
 
         if "enunciado" in dados:
             atividade.enunciado = dados["enunciado"]
@@ -77,7 +74,7 @@ class Atividade(db.Model):
     
     @staticmethod
     def verificar_professor(professor_id):
-        response = requests.get(f'http://host.docker.internal:5000/turmas/{professor_id}')
+        response = requests.get(f'http://host.docker.internal:5000/professores/{professor_id}')
         if response.status_code == 200:
             return response.json()
         else:
