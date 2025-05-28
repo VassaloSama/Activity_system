@@ -1,10 +1,11 @@
 from flask import jsonify, request, Blueprint
 from models.atividades import Atividade
 from config import db
+from flasgger import swag_from
 
 atividadesApp = Blueprint('atividades', __name__)
-
 @atividadesApp.route('/atividades', methods=['POST'])
+@swag_from('../docs/post.yml')
 def post_atividade():
     dados = request.json
     try:
@@ -15,10 +16,12 @@ def post_atividade():
     
 
 @atividadesApp.route('/atividades', methods=['GET'])
+@swag_from('../docs/get_all.yml')
 def listar_atividades():
     return jsonify(Atividade.listar_atividades()), 200
 
 @atividadesApp.route('/atividades/<int:id>', methods=['GET'])
+@swag_from('../docs/get_by_id.yml')
 def obter_atividade(id):
     atividade = Atividade.obter_atividade(id)
     if not atividade:
@@ -26,6 +29,7 @@ def obter_atividade(id):
     return jsonify(atividade), 200
 
 @atividadesApp.route('/atividades/<int:id>', methods=['PUT'])
+@swag_from('../docs/put.yml')
 def atualizar_atividade(id):
     dados = request.json
     try:
@@ -35,6 +39,7 @@ def atualizar_atividade(id):
         return jsonify({"erro": str(e.args[0])}), e.args[1]
 
 @atividadesApp.route('/atividades/<int:id>', methods=['DELETE'])
+@swag_from('../docs/delete.yml')
 def deletar_atividade(id):
     try:
         Atividade.deletar_atividade(id)
