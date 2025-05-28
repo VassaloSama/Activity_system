@@ -1,4 +1,5 @@
 from config import db
+from controller.atividade import verificar_professor
 
 class Atividade(db.Model):
     __tablename__ = 'atividades'
@@ -25,7 +26,7 @@ class Atividade(db.Model):
         if Atividade.query.get(dados["atividade_id"]):
             raise ValueError(("atividade com esse ID já existe!"), 400)
         
-        #Verificar professor
+        verificar_professor(dados["professor_id"])
 
         enunciado = str(dados["enunciado"])
 
@@ -55,7 +56,7 @@ class Atividade(db.Model):
         if not atividade:
             raise ValueError (("Atividade não encontrada!"), 404)
         
-        ##Verificar professor
+        verificar_professor(dados["professor_id"])
 
         if "enunciado" in dados:
             atividade.enunciado = dados["enunciado"]
