@@ -14,9 +14,9 @@ requestBody:
           professor_id:
             type: integer
             example: 2
-          hora_inicio:
+          enunciado:
             type: string
-            example: "AP1 - ADS3AN"
+            example: "Atividade matemática"
 responses:
   201:
     description: Atividade criada com sucesso
